@@ -5,7 +5,7 @@
 #   to learn the PyGame library.
 #
 #   Version History:
-#   MAR-6-26: Started project.
+#   MAR-6-26: Started project. Added Vec2d, SpriteObject, and Entity classes.
 #==============================================================
 
 import pygame
@@ -31,21 +31,36 @@ class Vec2D:
 #   to the mins and maxs we provided for x and y.
 #=========================================
 
+sprites = []
+
+# TODO: figure out why idx is out of bounds
 class SpriteObject:
-    def __init__(self, x_min=0, y_min=0, x_max=0, y_max=0):
-        self.spritename = ""
+    def __init__(self, idx=0, x_min=0, y_min=0, x_max=0, y_max=0):
+        self.sprite = sprites[idx]
         self.x_min = x_min;
         self.y_min = y_min;
         self.x_max = x_max;
         self.y_max = y_max;
 
-spr = SpriteObject;
+    def get_idx(name):
+        count = 0
+        for i in sprites:
+            if i != name:
+                sprites.append(name)
+            else:
+                break
+            count += 1
+        return count
 
-# test sprite table
+spr = SpriteObject;
+player = spr.get_idx("player.png")
+
+print(player)
+
 test_guy = [
-    spr("player.png", 0, 0, 69, 72),
-    spr("player.png", 0, 0, 69, 72),
-    spr("player.png", 0, 0, 69, 72),]
+    spr(player, 0, 0, 69, 72),
+    spr(player, 0, 0, 69, 72),
+    spr(player, 0, 0, 69, 72)]
 
 #=========================================
 #   Basic Entity
@@ -71,6 +86,14 @@ class Entity:
         self.frame = 0
         self.classname = ""
         self.nextthink = 0.0
+    def think():
+        pass
+    def touch(other):
+        pass
+
+# TODO: add transformation and collision checks in here
+for ent in ent_list:
+    pass
 
 while not exit:
     for event in pygame.event.get():
