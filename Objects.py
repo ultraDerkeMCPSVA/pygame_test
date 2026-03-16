@@ -3,7 +3,10 @@
 #   Entities and Sprite Objects for use in "ABUSE"
 #
 #   MAR-12-26: Created
+#   MAR-16-26: Fixed some errors...
 #==============================================================
+
+import Globals
 
 #=========================================
 #   Sprite Object class: Loads a sprite based on
@@ -35,23 +38,41 @@ class Entity:
         self.health = 0
         self.takedamage = 0
         self.solid = 0
-        self.size = Vec2D(0, 0)
-        self.org = Vec2D(0, 0)
-        self.vel = Vec2D(0, 0)
+        self.size = Globals.Vector2D(0, 0)
+        self.org = Globals.Vector2D(0, 0)
+        self.vel = Globals.Vector2D(0, 0)
         self.frame = 0
         self.classname = ""
         self.nextthink = 0.0
         self.free = False
+
+    #==============================================
+    # spawn() - Cycle through the Global entity list to see
+    # if we can nab a free entity. If the entity is free, un-free
+    # it and return it's pointer.
+    #==============================================
     def spawn():
-        for ent in gGlobals.ent_list:
-            if ent.free = True:
+        for ent in Globals.GameGlobals.ent_list:
+            if ent.free == True:
                 ent.free = False
                 return ent
         return -1
+
+    #==============================================
+    # think() - This function is what makes entities perform tasks.
+    # To make an entity think, you must update the entity's "nextthink"
+    # field, so the game will know when to make an entity think again.
+    #==============================================
     def think():
         pass
+
+    #==============================================
+    # touch() - When an entity is touched by another entity, this function
+    # is called.
+    #==============================================
     def touch(other):
         pass
+    
     def exec_think():
         if gGlobals.time > self.nextthink:
             think()
